@@ -9,11 +9,12 @@ module.exports = (() => {
           GatewayIntentBits.MessageContent,
           GatewayIntentBits.GuildMembers,
           GatewayIntentBits.DirectMessages,
-          GatewayIntentBits.MessageContent
+          GatewayIntentBits.MessageContent,
+          GatewayIntentBits.GuildMessageReactions
         ],
       });
 
     client.login(process.env.BOT_TOKEN);
-
+    
     return client;
 })();

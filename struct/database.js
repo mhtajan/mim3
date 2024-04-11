@@ -46,9 +46,36 @@ async insertDocument(database, collectionName, document) {
         const result = await collection.updateOne({ code: parsedDocument.code }, { $set: parsedDocument }, { upsert: true });
 
         if (result.upsertedCount > 0) {
-            console.log("Inserted new document:", parsedDocument);
+            //console.log("Inserted new document:", parsedDocument);
         } else {
-            console.log("Document already exists, not inserted:", parsedDocument);
+            //console.log("Document already exists, not inserted:", parsedDocument);
+        }
+
+        return result.upsertedId || null;
+    } catch (error) {
+        console.error("Error inserting/updating document in MongoDB:", error);
+        return null;
+    }
+}
+
+async insertBlacklist(database, collectionName, document) {
+    try {
+        const db = this.client.db(database);
+        const collection = db.collection(collectionName);
+
+        // Stringify the document while handling circular references
+        const serializedDocument = CircularJSON.stringify(document);
+
+        // Parse the serialized document back to JSON
+        const parsedDocument = CircularJSON.parse(serializedDocument);
+
+        // Use updateOne with upsert option to insert only if no matching document is found
+        const result = await collection.updateOne({ userId: parsedDocument.userId }, { $set: parsedDocument }, { upsert: true });
+
+        if (result.upsertedCount > 0) {
+            //console.log("Inserted new document:", parsedDocument);
+        } else {
+            //console.log("Document already exists, not inserted:", parsedDocument);
         }
 
         return result.upsertedId || null;
@@ -77,7 +104,23 @@ async getDocument(database, collectionName, query) {
         return null;
     }
 }
+async getAllDocuments(database, collectionName) {
+    try {
+        const db = this.client.db(database);
+        const collection = db.collection(collectionName);
 
+        const cursor = collection.find({});
+
+        const allDocuments = await cursor.toArray();
+
+        //console.log("All documents in the collection:", allDocuments);
+
+        return allDocuments;
+    } catch (error) {
+        console.error("Error retrieving all documents from MongoDB:", error);
+        return [];
+    }
+}
 }
 
 module.exports = MongoDB;
