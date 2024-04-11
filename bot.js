@@ -8,6 +8,8 @@ module.exports = (() => {
           GatewayIntentBits.GuildMessages,
           GatewayIntentBits.MessageContent,
           GatewayIntentBits.GuildMembers,
+          GatewayIntentBits.DirectMessages,
+          GatewayIntentBits.MessageContent
         ],
       });
 
