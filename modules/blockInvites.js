@@ -1,6 +1,7 @@
 const database = require('../struct/database.js');
 const db = new database();
-const deleteInvite = require('./deleteInvite.js')
+const deleteInvite = require('./deleteInvite.js');
+const trackInvites = require('./trackInvites.js');
 module.exports = ((client,invite) => {
     db.getDocument('discord_bot_mim3', 'blacklisted', { userId: invite.inviterId }).then(async (result) => {
         if(result){
@@ -27,6 +28,7 @@ module.exports = ((client,invite) => {
             })
         }
         else{
+            trackInvites(invite);
             console.log('User is not blacklisted')
         }
     })

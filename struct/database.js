@@ -84,6 +84,17 @@ async insertBlacklist(database, collectionName, document) {
         return null;
     }
 }
+async whiteList(database, collectionName, document) {
+    try {
+        const db = this.client.db(database);
+        //const collection = db.collection(collectionName);
+        db.collection(collectionName).deleteOne(document);
+    }
+    catch (error) {
+        console.error("Error inserting/updating document in MongoDB:", error);
+        return null;
+    }
+}
 async getDocument(database, collectionName, query) {
     try {
         const db = this.client.db(database);
@@ -112,8 +123,6 @@ async getAllDocuments(database, collectionName) {
         const cursor = collection.find({});
 
         const allDocuments = await cursor.toArray();
-
-        //console.log("All documents in the collection:", allDocuments);
 
         return allDocuments;
     } catch (error) {
