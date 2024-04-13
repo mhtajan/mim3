@@ -39,12 +39,16 @@ class inviteTracker{
     checkIfBlacklisted(inviteCode,userId){
         db.getDocument('discord_bot_mim3','blacklisted',{code:inviteCode}).then(result => {
             if(result){
-                client.on('ready', () => {
-                    client.users.fetch(userId).then(dm => {
-                     dm.send(`Your invite ${inviteCode} has been deleted!`);
-                     dm.send(`You are blacklisted from creating invites!`);
-                 })
-                 })
+                return true;
+                // client.on('ready', () => {
+                //     client.users.fetch(userId).then(dm => {
+                //      dm.send(`Your invite ${inviteCode} has been deleted!`);
+                //      dm.send(`You are blacklisted from creating invites!`);
+                //  })
+                //  })
+            }
+            else{
+                return false;
             }
         })
     }

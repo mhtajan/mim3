@@ -1,4 +1,4 @@
-const { Client, GatewayIntentBits } = require('discord.js');
+const { Client, GatewayIntentBits, ActivityType } = require('discord.js');
 require('dotenv').config()
 
 module.exports = (() => {
@@ -10,11 +10,14 @@ module.exports = (() => {
           GatewayIntentBits.GuildMembers,
           GatewayIntentBits.DirectMessages,
           GatewayIntentBits.MessageContent,
-          GatewayIntentBits.GuildMessageReactions
+          GatewayIntentBits.GuildMessageReactions,
+          GatewayIntentBits.GuildInvites
         ],
       });
 
     client.login(process.env.BOT_TOKEN);
-    
+    client.on('ready', () => {
+      client.user.setPresence({ activities: [{ type: ActivityType.Competing, name: 'development' }], status: 'dnd' });
+  })
     return client;
 })();

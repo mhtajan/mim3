@@ -7,7 +7,7 @@ client.commands = new Collection()
 module.exports = (() => {
     const foldersPath = path.join(__dirname, '../commands');
     const commandFiles = fs.readdirSync(foldersPath).filter(file => file.endsWith('.js'));
-    console.log(commandFiles)
+    //console.log(commandFiles)
     for (const file of commandFiles) {
         const command = require(`../commands/${file}`);
         if ('data' in command && 'execute' in command) {
