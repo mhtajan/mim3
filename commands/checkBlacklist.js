@@ -18,7 +18,6 @@ module.exports = {
                 await Promise.all(slicedResult.map(async (user)=> {
                     await getUser(user.userId)
                     .then(u => {
-
                         bLUser.push(JSON.parse(`{"name": "User: ${u.username}", "value": "Reason: ${user.reason} userID: ${u.id}"}`));
                     }).catch(err => {
                         bLUser.push(JSON.parse(`{"name": "User: ${err.rawError.message}", "value": "Reason: ${user.reason} userID: ${user.userId}"}`));
@@ -52,10 +51,8 @@ module.exports = {
                             currentPage++;
                             console.log(`Current page: ${currentPage}`);
                         }
-
                         // Update the message with the new page
-                        message.edit({ embeds: [await generatePageContent(currentPage,result)] });
-                        
+                        message.edit({ embeds: [await generatePageContent(currentPage,result)] });                        
                     });
                     collector.on('end', () => {
                         message.reactions.removeAll();
