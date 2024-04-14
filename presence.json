@@ -1,0 +1,21 @@
+{
+    "activities" : [
+        {
+            "type": "PLAYING",
+            "name": "mim3"
+        },
+        {
+            "type": "WATCHING",
+            "name": "EXchange Season 3"
+        },
+        {
+            "type": "LISTENING",
+            "name": "Magnetic - Illit"
+        },
+        {
+            "type": "COMPETING",
+            "name": "Valorant Immo lobbies"
+        }
+    ],
+    "status": "dnd"
+}
