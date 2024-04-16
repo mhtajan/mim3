@@ -1,14 +1,14 @@
-const { SpotifyParser } = require('spotilink');
-
-const spotifyID = ''; // Your Spotify app client ID
-const spotifySecret = ''; // Your Spotify app client secret
+const  SpotifyParser  = require('./SpotifyParser');
+require('dotenv').config()
+const spotifyID = process.env.SPOTIFY_ID; // Your Spotify app client ID
+const spotifySecret = process.env.SPOTIFY_SECRET; // Your Spotify app client secret
 const node = {
-	host: 'localhost',
-	port: 1234,
-	password: 'youshallnotpass'
+	host: process.env.LAVALINK_HOST,
+	port: process.env.LAVALINK_PORT,
+	password: process.env.LAVALINK_PASS
 };
-
-const  spotilink = new SpotifyParser(node, spotifyID, spotifySecret);
+async function main(){
+    const  spotilink = new SpotifyParser(node, spotifyID, spotifySecret);
 
 const song = await spotilink.getTrack("spotify:track:7l5yjQ9I3tL6t5yC6qDp5Y");
 const album = await spotilink.getAlbumTracks("spotify:album:2mJj5qQqJ9kRqkqXuqkTjT");
@@ -21,6 +21,8 @@ await Promise.all(album.map(async (name)=>{
     const track = await spotilink.fetchTrack(name)
     tracks.push(track)
 }))
+}
+
 class MusicPlayer {
     constructor() {
         this.queue = []; 
